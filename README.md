@@ -25,7 +25,10 @@ Repaso de JavaScript
 ### Enunciado Ejercicios
 
 1. Listart array de asignaturas con forEach
+
 2. Añade una nueva asignatura en tu array
+
 3. Elimina con pop una asignatura y muestra la eliminada
+
 4. Si tenemos este array = ["Julia", "María", "Elena", "Ana", "Sonia"]
     Elimina a Maria y muestra el array.
