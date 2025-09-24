@@ -27,7 +27,7 @@ btnDel.addEventListener("click", () => {
 })
 
 // funciones
-const listNames = () => {
+const listSubjects = () => {
   cleanUl(list)
   names.forEach(name => {
     let li = document.createElement("li")
