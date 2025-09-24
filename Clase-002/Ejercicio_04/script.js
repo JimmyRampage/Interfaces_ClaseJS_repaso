@@ -29,13 +29,20 @@ btnDel.addEventListener("click", () => {
   input.value = ""
 })
 
+// funciones
 const listNames = () => {
-  list.innerHTML = ""
+  cleanUl(list)
   names.forEach(name => {
     let li = document.createElement("li")
     li.textContent = name
     list.appendChild(li)
   })
+}
+
+const cleanUl = (ul) => {
+  while(ul.firstChild) {
+    ul.removeChild(ul.firstChild);
+  }
 }
 
 window.onload = () => {

@@ -14,13 +14,20 @@ btn.addEventListener("click", () => {
   listSubjects()
 })
 
-const listSubjects = () => {
-  list.innerHTML = ""
-  subjects.forEach(sb => {
+// funciones
+const listNames = () => {
+  cleanUl(list)
+  names.forEach(name => {
     let li = document.createElement("li")
-    li.textContent = sb
+    li.textContent = name
     list.appendChild(li)
   })
+}
+
+const cleanUl = (ul) => {
+  while(ul.firstChild) {
+    ul.removeChild(ul.firstChild);
+  }
 }
 
 window.onload = () => {
