@@ -32,3 +32,9 @@ Repaso de JavaScript
 
 4. Si tenemos este array = ["Julia", "María", "Elena", "Ana", "Sonia"]
     Elimina a Maria y muestra el array.
+
+## Clase 03
+
+Repaso de JavaScript DOM
+
+### Enunciado Ejercicios
