@@ -3,6 +3,9 @@
     margin: 0;
     padding: 0;
 }
+body {
+    background-color: #d7dee4;
+}
 
 main {
     display: flex;
@@ -21,6 +24,7 @@ main {
     width: fit-content;
     height: fit-content;
     outline: 2px solid #000;
+    background-color: #f5f5f5;
 }
 
 .cell {
@@ -36,11 +40,26 @@ main {
 
 #controls {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
 }
 .number-button {
     width: 40px;
+    height: 40px;
+    font-size: 1.5em;
+}
+
+#mode {
+    margin: 20px 0;
+}
+
+.mode-button {
+    width: calc(100%/3);
+    height: 40px;
+    font-size: 1.5em;
+}
+#reset-button {
+    width: 100%;
     height: 40px;
     font-size: 1.5em;
 }
