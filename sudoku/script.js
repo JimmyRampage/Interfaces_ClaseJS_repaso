@@ -109,8 +109,7 @@ const createResetButton = () => {
   reset.appendChild(resetButton);
   resetButton.addEventListener('click', () => {
     boardHTML.forEach((row, i) => {
-      row.forEach((_, j) => {
-        let cell = document.getElementById(`${i}-${j}`);
+      row.forEach((cell, j) => {
         cell.innerText = '';
       });
     });
