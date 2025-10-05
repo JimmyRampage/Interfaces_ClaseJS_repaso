@@ -1,11 +1,11 @@
 'use strict'
 
-let board = document.getElementById('board');
-let controls = document.getElementById('controls');
+const board = document.getElementById('board');
+const controls = document.getElementById('controls');
 
 // Create globals
-let boardHTML = new Array(9).fill(new Array(9).fill('')); // Array for cells
-let controlsHTML = new Array(9).fill(''); // Array for buttons
+const boardHTML = new Array(9).fill(new Array(9).fill('')); // Array for cells
+const controlsHTML = new Array(9).fill(''); // Array for buttons
 let selectedCell = null; // null for no selection, otherwise target
 
 // Create cells
@@ -27,8 +27,8 @@ boardHTML.forEach((row, i) => {
       selectedCell = e.target;
       let [row, col] = e.target.id.split('-');
       console.log(row, col);
-      selectedCellRowCol(row, col, 'lightblue');
-      cellDiv.style.backgroundColor = 'blue';
+      selectedCellRowCol(row, col, '#85AAB644');
+      cellDiv.style.backgroundColor = '#2274A599';
     })
     cellDiv.addEventListener('blur', (e) => {
       let [row, col] = e.target.id.split('-');
@@ -62,7 +62,7 @@ controlsHTML.forEach((_, i) => {
   controls.appendChild(button);
 });
 
-// Buttons logic
+// Number Buttons logic
 controlsHTML.forEach((_, i) => {
   let button = document.getElementById(`button-${i}`);
   button.addEventListener('click', (e) => {
@@ -79,3 +79,29 @@ controlsHTML.forEach((_, i) => {
     e.preventDefault();
   });
 });
+
+// Mode Buttons
+const mode = document.getElementById('mode');
+for (let i = 0; i < 3; i++) {
+  let modeButton = document.createElement('button');
+  let difficulty = i == 0 ? 'Easy' : i == 1 ? 'Medium' : 'Hard';
+  modeButton.innerText = difficulty;
+  modeButton.classList.add('mode-button');
+  modeButton.id = `mode-button-${difficulty}`;
+  mode.appendChild(modeButton);
+}
+
+// Reset Button
+const reset = document.getElementById('reset');
+let resetButton = document.createElement('button');
+resetButton.innerText = 'Reset';
+resetButton.id = 'reset-button';
+reset.appendChild(resetButton);
+resetButton.addEventListener('click', () => {
+  boardHTML.forEach((row, i) => {
+    row.forEach((_, j) => {
+      let cell = document.getElementById(`${i}-${j}`);
+      cell.innerText = '';
+    });
+  });
+})
