@@ -1,5 +1,7 @@
 'use strict'
 
+import { createSudoku } from "./boardMaker.js";
+
 // Selectores
 const board = document.getElementById('board');
 const controls = document.getElementById('controls');
@@ -126,3 +128,4 @@ window.onload = () => {
   createBoard();
   createButtons();
 }
+window.createSudoku = createSudoku;
