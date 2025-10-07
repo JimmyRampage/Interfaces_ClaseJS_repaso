@@ -20,8 +20,12 @@ Accesibilidad Básica: Se puede navegar por las celdas utilizando la tecla Tab g
 ```plaintext
 .
 ├── index.html      # Estructura principal de la página
-├── style.css       # Estilos para el tablero y los controles
-└── script.js       # Lógica del juego y manipulación del DOM
+└── assets/
+    ├── css/
+    │   └─ style.css       # Estilos para el tablero y los controles
+    └── js/
+        ├── script.js       # Lógica del juego y manipulación del DOM
+        └── boardMaker.js   # Lógica para la creación y resolución del tablero (Sudoku Solver)
 ```
 
 ## Tecnologías Utilizadas
@@ -34,12 +38,26 @@ Accesibilidad Básica: Se puede navegar por las celdas utilizando la tecla Tab g
 
 Durante el desarrollo de este proyecto, he reforzado y aprendido varios conceptos importantes de JavaScript y el desarrollo web:
 
-* **Gestión Compleja de Eventos:**
+* Algoritmos y Recursividad: Implementación del algoritmo de backtracking para generar soluciones de Sudoku, una técnica poderosa para resolver problemas de satisfacción de restricciones.
+* Copias Superficiales vs. Profundas: Entender la diferencia crítica entre `[...array]` (copia superficial) y `structuredClone()` (copia profunda) al trabajar con arrays anidados para evitar la mutación no deseada del estado original.
+* Gestión Compleja de Eventos:
   * Los elementos no interactivos como `<div>` no reciben eventos `focus` o `blur` a menos que se les añada el atributo `tabindex`.
-  * Cómo el evento `mousedown` y `event.preventDefault()` son cruciales para evitar que un elemento (como un botón) "robe" el foco de otro (la celda seleccionada), solucionando problemas de interacción complejos.
-* **Manejo de Estado:** La importancia de usar una variable global (`selectedCell`) para mantener el estado de la aplicación (saber qué celda está activa en todo momento) y cómo esto simplifica la lógica en los listeners.
-* **Refactorización de Lógica:** Pasar de una larga cadena de `if-else` a una fórmula matemática (`(quadrantRow * 3) + quadrantCol + 1`) para determinar el cuadrante. Esto no solo reduce el código, sino que lo hace más legible y mantenible.
-* **Separación de Responsabilidades (CSS vs. JS):** Identificar oportunidades para mover lógica de estilo (como los bordes gruesos) de JavaScript a CSS para un código más limpio y declarativo.
+  * Cómo el evento `mousedown` y `event.preventDefault()` son cruciales para evitar que un elemento (como un botón) "robe" el foco de otro (la celda seleccionada).
+* Manejo de Estado: La importancia de usar una variable global (`selectedCell`) para mantener el estado de la aplicación (saber qué celda está activa en todo momento).
+* Refactorización de Lógica: Pasar de una larga cadena de `if-else` a una fórmula matemática para determinar el cuadrante, haciendo el código más legible y mantenible.
+
+### 🧠 Algoritmo de Resolución: Backtracking
+
+La generación de un Sudoku válido y su resolución se basan en el algoritmo de backtracking, una técnica recursiva fundamental. Funciona de la siguiente manera:
+
+1. Encontrar una celda vacía: El algoritmo busca la primera celda sin un número en el tablero. Si no encuentra ninguna, el tablero está resuelto (`caso base`).
+2. Probar un número: Intenta colocar un número (del 1 al 9) en esa celda.
+3. Validación: Comprueba si el número es válido según las reglas del Sudoku (no repetido en fila, columna o cuadrante 3x3).
+4. Recursión:
+    * Si el número es válido, lo coloca y se llama a sí mismo para resolver el resto del tablero.
+    * Si esa llamada recursiva devuelve true (indicando que se encontró una solución completa), entonces este camino es correcto y se propaga el true hacia arriba.
+5. Backtracking (Vuelta Atrás): Si el número no es válido, o si la llamada recursiva devuelve false (indicando que ese número no llevó a una solución), el algoritmo deshace el movimiento (borra el número de la celda) y prueba con el siguiente número disponible.
+6. Fin: Si se han probado todos los números para una celda y ninguno lleva a una solución, la función devuelve false, indicando a la llamada anterior que debe hacer backtracking.
 
 ## Posibles Mejoras (To-Do)
 
