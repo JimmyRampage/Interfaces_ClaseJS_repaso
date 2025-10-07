@@ -59,3 +59,24 @@ export const createSudoku = () => {
 
   if (solve(board)) return board;
 }
+
+// Create boardPlayable
+export const createPlayable = (board, difficulty) => {
+  // Get all positions
+  let positions = [];
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      positions.push([i, j]);
+    }
+  }
+
+  // Shuffle positions
+  positions.sort(() => Math.random() - 0.5);
+
+  // Remove positions
+  for (let i = 0; i < difficulty; i++) {
+    let [row, col] = positions[i];
+    board[row][col] = '';
+  }
+  return board;
+}

@@ -1,6 +1,6 @@
 'use strict'
 
-import { createSudoku } from "./boardMaker.js";
+import { createSudoku, createPlayable } from "./boardMaker.js";
 
 // Selectores
 const board = document.getElementById('board');
@@ -11,6 +11,14 @@ const mode = document.getElementById('mode');
 // Create globals
 const boardHTML = Array.from({ length: 9 }, () => new Array(9).fill('')); // New way to create the matrix
 const controlsHTML = new Array(9).fill(''); // Array for buttons
+const modes = {
+  "Easy": 30,
+  "Medium": 40,
+  "Hard": 60
+}
+
+let boardSolution = createSudoku();
+let boardPlayable = createPlayable(structuredClone(boardSolution), modes['Medium']);
 let selectedCell = null; // null for no selection, otherwise target
 
 // Create cells
@@ -25,8 +33,9 @@ const createBoard = () => {
       cellDiv.id = `${i}-${j}`;
       if (i == 3 || i == 6) cellDiv.style.borderTop = '2px solid black';
       if (j == 3 || j == 6) cellDiv.style.borderLeft = '2px solid black';
+      cellDiv.innerText = boardPlayable[i][j];
       // listeners
-      cellDiv.tabIndex = 0; // tabIndex allows to select the HTMLElement
+      cellDiv.innerText !== '' ? '' : cellDiv.tabIndex = 0; // tabIndex allows to select the HTMLElement
       addListenersToCell(cellDiv);
       board.appendChild(cellDiv);
       boardHTML[i][j] = cellDiv;
@@ -84,11 +93,27 @@ const numberButtonsListeners = (button) => {
       } else {
         selectedCell.innerText = e.target.value;
       }
+      // check the play
+      if (checkPlay()) {
+        selectedCell.style.color = 'green';
+        selectedCell.removeAttribute('tabindex');
+      } else {
+        selectedCell.style.color = 'red';
+      }
     });
     // Prevent the button from taking focus away from the cell
     button.addEventListener('mousedown', (e) => {
       e.preventDefault();
     });
+}
+
+const checkPlay = () => {
+  let [row, col] = selectedCell.id.split('-');
+  if (selectedCell.innerText == boardSolution[row][col]) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Mode Buttons
@@ -98,9 +123,35 @@ const createModeButtons = () => {
     let difficulty = i == 0 ? 'Easy' : i == 1 ? 'Medium' : 'Hard';
     modeButton.innerText = difficulty;
     modeButton.classList.add('mode-button');
-    modeButton.id = `mode-button-${difficulty}`;
+    modeButton.id = `mode-${difficulty}`;
     mode.appendChild(modeButton);
   }
+  modeButtonsListeners();
+}
+
+// // internal function
+const modeButtonsListeners = () => {
+  const modeButtons = document.getElementsByClassName('mode-button');
+  for (const button of modeButtons) {
+    button.addEventListener('click', (e) => {
+      let difficulty = e.target.id.split('-')[1];
+      boardSolution = createSudoku();
+      boardPlayable = createPlayable(structuredClone(boardSolution), modes[difficulty]);
+      newBoard();
+    });
+  }
+}
+
+// // internal function
+const newBoard = () => {
+  boardHTML.forEach((row, i) => {
+    row.forEach((cell, j) => {
+      cell.removeAttribute('tabindex');
+      cell.style.color = '';
+      cell.innerText = boardPlayable[i][j];
+      cell.innerText !== '' ? '' : cell.tabIndex = 0;
+    });
+  });
 }
 
 // Reset Button
@@ -129,3 +180,7 @@ window.onload = () => {
   createButtons();
 }
 window.createSudoku = createSudoku;
+window.boardSolution = boardSolution;
+window.boardPlayable = boardPlayable;
+window.boardHTML = boardHTML;
+window.selectedCell = selectedCell;
