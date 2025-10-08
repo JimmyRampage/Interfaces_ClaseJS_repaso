@@ -10,6 +10,7 @@ const mode = document.getElementById('mode');
 const boardHTML = Array.from({ length: 9 }, () => new Array(9).fill('')); // New way to create the matrix
 const controlsHTML = new Array(9).fill(''); // Array for buttons
 let selectedCell = null; // null for no selection, otherwise target
+
 const boardEasy = [
   "--74916-5",
   "2---6-3-9",
@@ -21,6 +22,7 @@ const boardEasy = [
   "67-83----",
   "81--45---"
 ].map(row => row.split(''));
+
 const solutionEasy = [
   "387491625",
   "241568379",
