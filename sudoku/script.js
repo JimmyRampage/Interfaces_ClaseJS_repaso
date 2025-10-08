@@ -11,6 +11,30 @@ const boardHTML = Array.from({ length: 9 }, () => new Array(9).fill('')); // New
 const controlsHTML = new Array(9).fill(''); // Array for buttons
 let selectedCell = null; // null for no selection, otherwise target
 
+const boardEasy = [
+  "--74916-5",
+  "2---6-3-9",
+  "-----7-1-",
+  "-586----4",
+  "--3----9-",
+  "--62--187",
+  "9-4-7---2",
+  "67-83----",
+  "81--45---"
+].map(row => row.split(''));
+
+const solutionEasy = [
+  "387491625",
+  "241568379",
+  "569327418",
+  "758619234",
+  "123784596",
+  "496253187",
+  "934176852",
+  "675832941",
+  "812945763"
+].map(row => row.split(''));
+
 // Create cells
 const createBoard = () => {
   boardHTML.forEach((row, i) => {
