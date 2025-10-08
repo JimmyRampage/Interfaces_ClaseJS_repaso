@@ -10,7 +10,6 @@ const mode = document.getElementById('mode');
 const boardHTML = Array.from({ length: 9 }, () => new Array(9).fill('')); // New way to create the matrix
 const controlsHTML = new Array(9).fill(''); // Array for buttons
 let selectedCell = null; // null for no selection, otherwise target
-
 const boardEasy = [
   "--74916-5",
   "2---6-3-9",
@@ -22,7 +21,6 @@ const boardEasy = [
   "67-83----",
   "81--45---"
 ].map(row => row.split(''));
-
 const solutionEasy = [
   "387491625",
   "241568379",
@@ -47,9 +45,12 @@ const createBoard = () => {
       cellDiv.id = `${i}-${j}`;
       if (i == 3 || i == 6) cellDiv.style.borderTop = '2px solid black';
       if (j == 3 || j == 6) cellDiv.style.borderLeft = '2px solid black';
+      // Add first map
+      const valueCell = boardEasy[i][j] === '-' ? '' : boardEasy[i][j];
+      cellDiv.textContent = valueCell;
       // listeners
       cellDiv.tabIndex = 0; // tabIndex allows to select the HTMLElement
-      addListenersToCell(cellDiv);
+      if (valueCell == '') addListenersToCell(cellDiv);
       board.appendChild(cellDiv);
       boardHTML[i][j] = cellDiv;
     });
@@ -71,6 +72,9 @@ const addListenersToCell = (cell) => {
     selectedCell = null;
   })
 }
+
+
+
 
 // // highlight rows and cols of the selected Cell (internal function)
 const selectedCellRowCol = (x, y, color='') => {
@@ -105,12 +109,28 @@ const numberButtonsListeners = (button) => {
         selectedCell.innerText = '';
       } else {
         selectedCell.innerText = e.target.value;
+        if (check(selectedCell)) {
+          selectedCell.style.color = 'green';
+          selectedCell.removeAttribute('tabIndex')
+        } else {
+          selectedCell.style.color = 'red';
+        }
       }
     });
     // Prevent the button from taking focus away from the cell
     button.addEventListener('mousedown', (e) => {
       e.preventDefault();
     });
+}
+
+// check
+const check = (cell) => {
+  let [row, col] = cell.id.split('-');
+  if (cell.innerText == solutionEasy[row][col]) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Mode Buttons
@@ -145,6 +165,7 @@ const createButtons = () => {
   createModeButtons();
   createResetButton();
 }
+
 
 window.onload = () => {
   createBoard();
